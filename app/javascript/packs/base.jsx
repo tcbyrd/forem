@@ -4,9 +4,33 @@ import {
   getInstantClick,
   initializeTouchDevice,
 } from '../topNavigation/utilities';
-import { getFocusTrapToggle } from '../utilities/getFocusTrapToggle';
 
-window.getFocusTrapToggle = getFocusTrapToggle;
+window.getFocusTrapToggle = async (selector) => {
+  const [{ Modal }, { render, h }] = await Promise.all([
+    import('@crayons/Modal'),
+    import('preact'),
+  ]);
+  const modalRoot = document.createElement('div');
+  document.body.appendChild(modalRoot);
+
+  render(
+    <Modal
+      title="Log in to continue"
+      onClose={() => {
+        render(null, modalRoot);
+      }}
+      size="s"
+    >
+      <div
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: document.querySelector(selector).innerHTML,
+        }}
+      />
+    </Modal>,
+    modalRoot,
+  );
+};
 
 function getPageEntries() {
   return Object.entries({

@@ -41,6 +41,8 @@ export const Modal = ({
   overlay,
   onClose,
 }) => {
+  const closeHandler = onClose ?? unmount();
+
   return (
     <FocusTrap onDeactivate={onClose}>
       <div
