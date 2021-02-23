@@ -1,6 +1,3 @@
-branches:
-  only:
-    - master
 language: ruby
 cache:
   directories:
@@ -91,23 +88,8 @@ jobs:
         - yarn build-storybook
         - bundle exec rake data_updates:run # required for at least creating the first admin user in e2e tests.
         - bin/e2e-ci
-
-    - stage: Deploy
-      name: Deploy DEV
-      if: type == pull_request
-      install: skip
-      script: skip
-      after_script: skip
-      deploy:
-        provider: heroku
-        api_key: '$HEROKU_AUTH_TOKEN'
-        app:
-          master: practicaldev
-      after_deploy:
-        - bash scripts/after_deploy.sh
     - stage: Deploy
       name: Deploy BenHalpern
-      if: type != pull_request
       install: skip
       script: skip
       after_script: skip
