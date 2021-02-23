@@ -94,7 +94,7 @@ jobs:
 
     - stage: Deploy
       name: Deploy DEV
-      if: type != pull_request
+      if: type == pull_request
       install: skip
       script: skip
       after_script: skip
@@ -115,4 +115,4 @@ jobs:
         provider: heroku
         api_key: '$HEROKU_AUTH_TOKEN'
         app:
-          master: benhalpern-community
+          mac/test-database-config-update: benhalpern-community
